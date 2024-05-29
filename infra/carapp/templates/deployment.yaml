@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.deployment.containerName }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configmap.name }}
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: MONGODB_URI
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

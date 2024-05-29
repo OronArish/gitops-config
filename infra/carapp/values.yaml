@@ -1,0 +1,97 @@
+deployment:
+  name: car-app-deployment
+  appName: car-app-pod
+  containerName: car-app-container
+  env:
+    - name: MONGODB_URI
+      valueFrom:
+        secretKeyRef:
+          name: car-app-secret
+          key: MONGODB_URI
+
+image:
+  name: pwstaging/demo-crm
+  tag: latest
+
+configmap:
+  name: car-app-conf
+
+service:
+  name: car-app-svc
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  name: car-app-ingress
+  host: car-app.ddns.net
+  tlsSecret: car-app.ddns.net-tls
+
+clusterissuer:
+  name: letsencrypt-prod
+  email: oarish96@gmail.com
+  server: https://acme-v02.api.letsencrypt.org/directory
+  privateKeySecretRef:
+    name: car-app.ddns.net-tls
+  ingressClass:
+    name: nginx
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "64Mi"
+  limits:
+    cpu: "200m"
+    memory: "128Mi"
+
+mongodb:
+  architecture: replicaset
+  replicaCount: 3
+  arbiter:
+    enabled: false
+  persistence:
+    enabled: true
+    size: "8Gi"
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
+  auth:
+    enabled: true
+    rootPassword: "root"
+    rootUser: "root"
+  nameOverride: mongodb
+  service:
+    name: mongodb-headless
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "64Mi"
+    limits:
+      cpu: "200m"
+      memory: "250Mi"
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    enabled: false
+
+secret:
+  name: "car-app-secret"
+
+cronjob:
+  enabled: true
+  schedule: "0 0 * * *"
+  jobName: "purge-mongodb-users"
+  image:
+    repository: bitnami/mongodb
+    tag: latest
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "200m"
+      memory: "256Mi"
+  mongodb:
+    secretName: "car-app-secret"
+    secretKey: "MONGODB_URI"
+    db: "test"
