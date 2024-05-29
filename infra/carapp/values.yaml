@@ -1,5 +1,6 @@
 deployment:
   name: car-app-deployment
+  namespace: car-app
   appName: car-app-pod
   containerName: car-app-container
   env:
@@ -10,20 +11,22 @@ deployment:
           key: MONGODB_URI
 
 image:
-  name: pwstaging/demo-crm
-  tag: latest
+  name: 644435390668.dkr.ecr.ap-south-1.amazonaws.com/oron-portfolio-app
+  tag: 1.0.0
 
 configmap:
   name: car-app-conf
 
 service:
   name: car-app-svc
+  namespace: car-app
   type: ClusterIP
   port: 80
-  targetPort: 3000
+  targetPort: 5001
 
 ingress:
   name: car-app-ingress
+  namespace: car-app
   host: car-app.ddns.net
   tlsSecret: car-app.ddns.net-tls
 
@@ -76,22 +79,3 @@ mongodb:
 
 secret:
   name: "car-app-secret"
-
-cronjob:
-  enabled: true
-  schedule: "0 0 * * *"
-  jobName: "purge-mongodb-users"
-  image:
-    repository: bitnami/mongodb
-    tag: latest
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "128Mi"
-    limits:
-      cpu: "200m"
-      memory: "256Mi"
-  mongodb:
-    secretName: "car-app-secret"
-    secretKey: "MONGODB_URI"
-    db: "test"
