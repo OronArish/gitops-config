@@ -13,8 +13,6 @@ spec:
       labels:
         app: {{ .Values.deployment.appName }}
     spec:
-      imagePullSecrets:
-        - name: ecr-registry-secret
       containers:
         - name: {{ .Values.deployment.containerName }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
