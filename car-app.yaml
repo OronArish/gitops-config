@@ -7,11 +7,11 @@ spec:
   project: default
   source:
     repoURL: "git@gitlab.com:orondevops1/gitops-config.git"
-    path: infra/car-app
+    path: infra/carapp
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: car-app
   syncPolicy:
     automated:
       prune: true
