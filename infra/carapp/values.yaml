@@ -27,15 +27,15 @@ service:
 ingress:
   name: car-app-ingress
   namespace: car-app
-  host: a3a401783adb741eb9471a383a003c74-1442015799.ap-south-1.elb.amazonaws.com
-  tlsSecret: a3a401783adb741eb9471a383a003c74-1442015799.ap-south-1.elb.amazonaws.com-tls
+  host: a6d65ca07b9ad403a96128fa7ee6390e-281912025.ap-south-1.elb.amazonaws.com
+  tlsSecret: a6d65ca07b9ad403a96128fa7ee6390e-281912025.ap-south-1.elb.amazonaws.com-tls
 
 clusterissuer:
   name: letsencrypt-prod
   email: oarish96@gmail.com
   server: https://acme-v02.api.letsencrypt.org/directory
   privateKeySecretRef:
-    name: car-app.ddns.net-tls
+    name: a6d65ca07b9ad403a96128fa7ee6390e-281912025.ap-south-1.elb.amazonaws.com-tls
   ingressClass:
     name: nginx
 
@@ -48,6 +48,7 @@ resources:
     memory: "128Mi"
 
 mongodb:
+  namespace: car-app
   architecture: replicaset
   replicaCount: 3
   arbiter:
