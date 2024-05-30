@@ -27,8 +27,8 @@ service:
 ingress:
   name: car-app-ingress
   namespace: car-app
-  host: car-app.ddns.net
-  tlsSecret: car-app.ddns.net-tls
+  host: a3a401783adb741eb9471a383a003c74-1442015799.ap-south-1.elb.amazonaws.com
+  tlsSecret: a3a401783adb741eb9471a383a003c74-1442015799.ap-south-1.elb.amazonaws.com-tls
 
 clusterissuer:
   name: letsencrypt-prod
