@@ -27,15 +27,15 @@ service:
 ingress:
   name: car-app-ingress
   namespace: car-app
-  host: a15dc5c55577e4642b36f3dec4752849-1067652250.ap-south-1.elb.amazonaws.com
-  tlsSecret: a15dc5c55577e4642b36f3dec4752849-1067652250.ap-south-1.elb.amazonaws.com-tls
+  host: oron-carapp.ddns.net
+  tlsSecret: oron-carapp.ddns.net-tls
 
 clusterissuer:
   name: letsencrypt-prod
   email: oarish96@gmail.com
   server: https://acme-v02.api.letsencrypt.org/directory
   privateKeySecretRef:
-    name: a15dc5c55577e4642b36f3dec4752849-1067652250.ap-south-1.elb.amazonaws.com-tls
+    name: oron-carapp.ddns.net-tls
   ingressClass:
     name: nginx
 
