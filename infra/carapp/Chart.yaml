@@ -9,11 +9,7 @@ appVersion: "1.0"
 
 dependencies:
   - name: mongodb
-<<<<<<< HEAD
     version: 1.0.6
-=======
-    version: 1.0.6
->>>>>>> origin/main
     repository: "https://charts.bitnami.com/bitnami"
   # - name: ingress-nginx
   #   version: 1.0.6
