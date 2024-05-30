@@ -22,7 +22,7 @@ service:
   namespace: car-app
   type: ClusterIP
   port: 80
-  targetPort: 5001
+  targetPort: 5000
 
 ingress:
   name: car-app-ingress
