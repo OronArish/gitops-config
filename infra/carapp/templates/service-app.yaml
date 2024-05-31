@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.service.name }}
   namespace: {{ .Values.service.namespace }}
   labels:
-    app: {{ Values.service.labels }}
+    app: {{ Values.service.labels.app }}
 spec:
   type: {{ .Values.service.type }}
   ports:
