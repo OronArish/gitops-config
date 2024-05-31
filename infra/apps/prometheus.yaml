@@ -3,17 +3,12 @@ kind: Application
 metadata:
   name: prometheus
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: "https://prometheus-community.github.io/helm-charts"
     chart: kube-prometheus-stack
-    targetRevision: 56.*
-    helm:
-      releaseName: monitoring
-      passCredentials: false
+    targetRevision: v0.52.0
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -22,11 +17,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - Validate=false
       - CreateNamespace=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
-      - RespectIngoreDifferences=true
-      - Replace=false
-      - ApplyOutOfSyncOnly=true
-      - ServerSideApply=true
