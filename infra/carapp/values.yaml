@@ -20,8 +20,6 @@ configmap:
 service:
   name: car-app-svc
   namespace: car-app
-  labels:
-    app: car-app-pod
   type: ClusterIP
   port: 80
   targetPort: 5000
