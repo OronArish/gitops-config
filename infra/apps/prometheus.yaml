@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://prometheus-community.github.io/helm-charts"
-    chart: prometheus
-    targetRevision: 25.21.0
+    repoURL: "https://worawutchan.github.io/helm-charts"
+    chart: kube-prometheus-stack
+    targetRevision: 12.8.0
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
