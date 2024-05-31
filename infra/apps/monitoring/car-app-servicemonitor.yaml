@@ -4,11 +4,11 @@ metadata:
   name: car-app
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: prometheus
+    app: car-app
 spec:
   selector:
     matchLabels:
-      argocd.argoproj.io/instance: car-app
+      app: car-app-pod
   endpoints:
     - port: http
       path: /metrics
