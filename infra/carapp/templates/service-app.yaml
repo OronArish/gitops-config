@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   namespace: {{ .Values.service.namespace }}
-  labels:
-    app: {{ Values.deployment.appName }}
 spec:
   type: {{ .Values.service.type }}
   ports:

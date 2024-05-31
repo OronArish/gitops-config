@@ -9,16 +9,9 @@ spec:
     repoURL: "https://prometheus-community.github.io/helm-charts"
     targetRevision: 25.21.0
     chart: prometheus
-    helm:
-      values: |
-        prometheus:
-          prometheusSpec:
-            serviceMonitorSelector:
-              matchLabels:
-                app: car-app
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: default
   syncPolicy:
     automated:
       prune: true
