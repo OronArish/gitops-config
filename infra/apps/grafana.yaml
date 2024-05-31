@@ -1,20 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-crds
+  name: grafana
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: "https://prometheus-community.github.io/helm-charts"
-    chart: kube-prometheus-stack-crds
-    targetRevision: 41.6.1
+    repoURL: "https://grafana.github.io/helm-charts"
+    targetRevision: 7.3.11
+    chart: grafana
   destination:
-    namespace: monitoring
     server: https://kubernetes.default.svc
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
