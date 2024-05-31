@@ -3,12 +3,14 @@ kind: Application
 metadata:
   name: prometheus
   namespace: argocd
+annotations:
+  argocd.argoproj.io/sync-options: Replace=true
 spec:
   project: default
   source:
-    repoURL: "https://github.com/prometheus-community/helm-charts.git"
-    path: charts/kube-prometheus-stack
-    targetRevision: kube-prometheus-stack-44.4.1
+    repoURL: "https://charts.alekc.dev"
+    chart: kube-prometheus-stack-crd
+    targetRevision: 49.0.0
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -18,4 +20,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
