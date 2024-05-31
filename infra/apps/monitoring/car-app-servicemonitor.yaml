@@ -3,10 +3,12 @@ kind: ServiceMonitor
 metadata:
   name: car-app
   namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: prometheus
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: car-app
+      argocd.argoproj.io/instance: car-app
   endpoints:
     - port: http
       path: /metrics
