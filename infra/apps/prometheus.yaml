@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: "https://prometheus-community.github.io/helm-charts"
     chart: kube-prometheus-stack
-    targetRevision: 49.0.0
+    targetRevision: 59.0.0
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -17,4 +17,5 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
+      - ServerSideApply=true
       - CreateNamespace=true
