@@ -1,26 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-prometheus-stack
+  name: prometheus
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
   source:
-    repoURL: "https://prometheus-community.github.io/helm-charts"
-    targetRevision: 41.6.1
     chart: kube-prometheus-stack
-    helm:
-      skipCrds: true
-      values: |-
-        # Add your custom values here if needed
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 59.0.0
   destination:
-    server: https://kubernetes.default.svc
     namespace: monitoring
+    server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
+      - ServerSideApply=true
       - CreateNamespace=true
