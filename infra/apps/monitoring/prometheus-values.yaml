@@ -13,6 +13,7 @@ prometheus:
         static_configs:
           - targets:
               - oron-carapp.ddns.net
+
 grafana:
   enabled: true
   persistence:
