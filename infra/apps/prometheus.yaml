@@ -11,7 +11,7 @@ spec:
     targetRevision: 59.0.0
     helm:
       valueFiles:
-        - ../monitoring/prometheus-values.yaml
+        - infra/apps/monitoring/prometheus-values.yaml
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
