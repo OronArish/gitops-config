@@ -2,12 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kube-prometheus-stack-crds
+  namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  destination:
-    name: in-cluster
-    namespace: monitoring
   project: default
   source:
     repoURL: https://github.com/prometheus-community/helm-charts.git
@@ -15,10 +13,13 @@ spec:
     targetRevision: kube-prometheus-stack-34.1.1
     directory:
       recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-      - Replace=true
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
