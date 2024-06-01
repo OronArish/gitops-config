@@ -1,0 +1,29 @@
+# Existing configuration
+# ingress:
+#   enabled: true
+#   hostname: oronkibana.ddns.net
+#   ingressClassName: "nginx"
+
+elasticsearch:
+  hosts:
+    - elasticsearch.efk.svc.cluster.local
+  port: 9200
+
+readinessProbe:
+  enabled: false
+
+livenessProbe:
+  enabled: false
+
+resources:
+  requests:
+    cpu: "0.2"
+    memory: "2000Mi"
+  limits:
+    cpu: "0.2"
+    memory: "2000Mi"
+
+xpack:
+  reporting:
+    roles:
+      enabled: false

@@ -1,0 +1,43 @@
+master:
+  masterOnly: false
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: "0.2"
+      memory: "1Gi"
+    limits:
+      cpu: "0.4"
+      memory: "2Gi"
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    enabled: false
+data:
+  replicaCount: 0
+ingest:
+  enabled: false
+coordinating:
+  replicaCount: 0
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 50Gi
+persistence:
+  labels:
+    enabled: true
+secret:
+  enabled: true
+  password: "password"
+networkPolicy:
+  enabled: true
+  ingress:
+    - from: {}
+      ports:
+        - protocol: TCP
+          port: 9200
+  egress:
+    - to: {}
+      ports:
+        - protocol: TCP
+          port: 9200
