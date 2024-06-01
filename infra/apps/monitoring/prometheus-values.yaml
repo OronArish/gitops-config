@@ -12,7 +12,7 @@ prometheus:
         scheme: http
         static_configs:
           - targets:
-              - oron-carapp.ddns.net
+              - car-app-svc.car-app.svc.cluster.local:80
 
 grafana:
   enabled: true
