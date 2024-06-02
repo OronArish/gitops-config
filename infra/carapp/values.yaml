@@ -56,9 +56,8 @@ mongodb:
   auth:
     enabled: true
     secretName: car-app-mongodb-secret
-    secretKeys:
-      rootPassword: "root"
-      rootUser: "root"
+    rootPassword: "root"
+    rootUser: "root"
   nameOverride: mongodb
   service:
     name: mongodb-headless
@@ -73,6 +72,9 @@ mongodb:
     enabled: false
   livenessProbe:
     enabled: false
+  mongodb:
+    secretName: "car-app-secret"
+    secretKey: "MONGODB_URI"
 
 secret:
-  name: "car-app-mongodb-secret"
+  name: "car-app-secret"
