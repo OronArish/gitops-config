@@ -57,8 +57,8 @@ mongodb:
     enabled: true
     secretName: car-app-mongodb-secret
     secretKeys:
-      rootPassword: ROOT_PASSWORD
-      rootUser: ROOT_USER
+      rootPassword: "root"
+      rootUser: "root"
   nameOverride: mongodb
   service:
     name: mongodb-headless
