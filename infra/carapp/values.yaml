@@ -3,12 +3,6 @@ deployment:
   namespace: car-app
   appName: car-app-pod
   containerName: car-app-container
-  env:
-    - name: MONGODB_URI
-      valueFrom:
-        secretKeyRef:
-          name: car-app-secret
-          key: MONGODB_URI
 
 image:
   name: 644435390668.dkr.ecr.ap-south-1.amazonaws.com/oron-portfolio-app
@@ -61,8 +55,10 @@ mongodb:
       - ReadWriteOnce
   auth:
     enabled: true
-    rootPassword: "root"
-    rootUser: "root"
+    secretName: crm-app-mongodb-secret
+    secretKeys:
+      rootPassword: ROOT_PASSWORD
+      rootUser: ROOT_USER
   nameOverride: mongodb
   service:
     name: mongodb-headless
@@ -77,9 +73,6 @@ mongodb:
     enabled: false
   livenessProbe:
     enabled: false
-  mongodb:
-    secretName: "car-app-secret"
-    secretKey: "MONGODB_URI"
 
 secret:
-  name: "car-app-secret"
+  name: "car-app-mongodb-secret"

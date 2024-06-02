@@ -1,3 +1,14 @@
+{{- define "mongoPartUri" -}}
+  {{- $releaseName := .Release.Name -}}
+  {{- $namespace := .Release.Namespace -}}
+  {{- $nameOverride := default "mongodb" .Values.mongodb.fullnameOverride -}}
+  {{- $replicaCount := .Values.mongodb.replicaCount | int -}}
+  {{- range $i := until $replicaCount -}}
+    {{- printf "%s-%s-%d.%s-headless.%s.svc.cluster.local:27017" $releaseName $nameOverride $i $nameOverride $namespace -}}
+    {{- if ne (add1 $i) $replicaCount }},{{ end -}}
+  {{- end -}}
+{{- end }}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,3 +16,4 @@ metadata:
 data:
   LOG_LEVEL: "info"
   PERSISTENCE: "true"
+  MONGODB_PART_URI: {{ include "mongoPartUri" . }}

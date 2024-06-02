@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.deployment.name }}
-  namespace: {{ .Values.deployment.namespace }}
 spec:
   replicas: 3
   selector:
@@ -16,17 +15,34 @@ spec:
       containers:
         - name: {{ .Values.deployment.containerName }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          ports:
-          - containerPort: {{ .Values.service.targetPort }}
-          envFrom:
-            - configMapRef:
-                name: {{ .Values.configmap.name }}
           env:
-            - name: MONGODB_URI
+            - name: MONGODB_PART_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configmap.name }}
+                  key: MONGODB_PART_URI
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configmap.name }}
+                  key: LOG_LEVEL
+            - name: PERSISTENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configmap.name }}
+                  key: PERSISTENCE
+            - name: ROOT_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.name }}
-                  key: MONGODB_URI
+                  key: ROOT_USER
+            - name: ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: ROOT_PASSWORD
+            - name: MONGODB_URI
+              value: mongodb://$(ROOT_USER):$(ROOT_PASSWORD)@$(MONGODB_PART_URI)
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
