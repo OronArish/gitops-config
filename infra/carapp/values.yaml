@@ -12,7 +12,7 @@ deployment:
 
 image:
   name: 644435390668.dkr.ecr.ap-south-1.amazonaws.com/oron-portfolio-app
-  tag: 1.0.16
+  tag: 1.0.17
 
 configmap:
   name: car-app-conf
