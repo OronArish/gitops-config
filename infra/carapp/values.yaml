@@ -55,7 +55,7 @@ mongodb:
       - ReadWriteOnce
   auth:
     enabled: true
-    secretName: crm-app-mongodb-secret
+    secretName: car-app-mongodb-secret
     secretKeys:
       rootPassword: ROOT_PASSWORD
       rootUser: ROOT_USER
