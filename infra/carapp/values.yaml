@@ -55,10 +55,7 @@ mongodb:
       - ReadWriteOnce
   auth:
     enabled: true
-    secretName: car-app-mongodb-secret
-    secretKeys:
-      rootPassword: ROOT_PASSWORD
-      rootUser: ROOT_USER
+    existingSecret: car-app-mongodb-secret
   nameOverride: mongodb
   service:
     name: mongodb-headless
