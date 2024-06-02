@@ -17,33 +17,15 @@ config:
         [INPUT]
             Name tail
             Path /var/log/containers/*car*.log
-            Tag car-app.*
-            Parser docker
-            Mem_Buf_Limit 50MB
-            Skip_Long_Lines On
-
-        [INPUT]
-            Name tail
-            Path /var/log/containers/*.log
-            multiline.parser docker, cri
             Tag kube.*
             Parser docker
             Mem_Buf_Limit 50MB
             Skip_Long_Lines On
 
-    filters: |
-        [FILTER]
-            Name kubernetes
-            Match kube.*
-            Merge_Log On
-            Keep_Log Off
-            Buffer_Size False
-            K8S-Logging.Parser On
-
     outputs: |
         [OUTPUT]
             Name es
-            Match *car.*
+            Match *car*
             Host elasticsearch.efk.svc.cluster.local
             Port 9200
             Index fluent-bit-car-app
