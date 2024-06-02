@@ -4,7 +4,7 @@
   {{- $nameOverride := default "mongodb" .Values.mongodb.fullnameOverride -}}
   {{- $replicaCount := .Values.mongodb.replicaCount | int -}}
   {{- range $i := until $replicaCount -}}
-    {{- printf "%s-%s-%d.%s-headless.%s.svc.cluster.local:27017" $releaseName $nameOverride $i $nameOverride $namespace -}}
+    {{- printf "%s-%s-%d.%s-%s-headless.%s.svc.cluster.local:27017" $releaseName $nameOverride $i $releaseName $nameOverride $namespace -}}
     {{- if ne (add1 $i) $replicaCount }},{{ end -}}
   {{- end -}}
 {{- end }}
