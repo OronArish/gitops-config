@@ -73,8 +73,8 @@ mongodb:
   livenessProbe:
     enabled: false
   mongodb:
-    secretName: "car-app-secret"
+    secretName: "car-app-mongodb-secret"
     secretKey: "MONGODB_URI"
 
 secret:
-  name: "car-app-secret"
+  name: "car-app-mongodb-secret"
