@@ -55,7 +55,6 @@ mongodb:
       - ReadWriteOnce
   auth:
     enabled: true
-    secretName: car-app-mongodb-secret
     rootPassword: "root"
     rootUser: "root"
   nameOverride: mongodb
@@ -72,8 +71,6 @@ mongodb:
     enabled: false
   livenessProbe:
     enabled: false
-  mongodb:
-    secretName: "car-app-mongodb-secret"
 
 secret:
   name: "car-app-mongodb-secret"
