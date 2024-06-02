@@ -59,7 +59,7 @@ config:
 
         [INPUT]
             Name tail
-            Path /var/log/containers/*.log
+            Path /var/log/containers/*car*.log
             Tag kube.*
             Parser docker
             Mem_Buf_Limit 50MB
@@ -127,7 +127,7 @@ config:
 
         [OUTPUT]
             Name es
-            Match *
+            Match car.*
             Host elasticsearch.efk.svc.cluster.local
             Port 9200
             Index fluent-bit
