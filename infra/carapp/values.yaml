@@ -74,7 +74,6 @@ mongodb:
     enabled: false
   mongodb:
     secretName: "car-app-mongodb-secret"
-    secretKey: "MONGODB_URI"
 
 secret:
   name: "car-app-mongodb-secret"
