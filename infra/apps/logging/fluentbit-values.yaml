@@ -1,5 +1,5 @@
 logLevel: info
-
+## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file
 config:
     service: |
         [SERVICE]
@@ -18,63 +18,18 @@ config:
     inputs: |
         [INPUT]
             Name tail
-            Path /var/log/containers/*.log
-            multiline.parser docker, cri
-            Tag kube.*
-            Mem_Buf_Limit 100MB
-            Skip_Long_Lines On
-
-        [INPUT]
-            Name tail
-            Path /var/log/containers/*ingress-nginx-controller*.log
-            Parser nginx_parser
-            Tag nginx.*
-
-
-        [INPUT]
-            Name tail
             Path /var/log/containers/*car*.log
             Tag kube.*
             Parser docker
             Mem_Buf_Limit 50MB
             Skip_Long_Lines On
 
-    ## https://docs.fluentbit.io/manual/pipeline/filters
-    filters: |
-        [FILTER]
-            Name parser
-            Match nginx.*
-            Key_Name log
-            Parser nginx_parser
-            Preserve_Key On
-            Reserve_Data On
-
-        [FILTER]
-            Name parser
-            Match car.*
-            Key_Name log
-            Parser car_parser
-            Preserve_Key On
-            Reserve_Data On
-
     ## https://docs.fluentbit.io/manual/pipeline/outputs
     outputs: |
-        [OUTPUT]
-            Name es
-            Match nginx.*
-            Index fluent-bit-nginx
-            Type  _doc
-            Host elasticsearch.efk.svc.cluster.local
-            Port 9200
-            tls.verify Off
-            Logstash_Format On
-            Logstash_Prefix nginx
-            Retry_Limit False
-            Suppress_Type_Name On
 
         [OUTPUT]
             Name es
-            Match car.*
+            Match *car*
             Host elasticsearch.efk.svc.cluster.local
             Port 9200
             Index fluent-bit
@@ -91,21 +46,3 @@ config:
             Regex ^(?<remote_addr>[^ ]*) - (?<remote_user>[^ ]*) \[(?<time_local>[^\]]*)\] "(?<request>[^"]*)" (?<status>[^ ]*) (?<body_bytes_sent>[^ ]*) "(?<http_referer>[^"]*)" "(?<http_user_agent>[^"]*)"
             Time_Key time_local
             Time_Format %d/%b/%Y:%H:%M:%S %z
-
-        [PARSER]
-            Name car_parser
-            Format regex
-            Regex ^(?<remote_addr>[^ ]*) - (?<remote_user>[^ ]*) \[(?<time_local>[^\]]*)\] "(?<request>[^"]*)" (?<status>[^ ]*) (?<body_bytes_sent>[^ ]*) "(?<http_referer>[^"]*)" "(?<http_user_agent>[^"]*)"
-            Time_Key time_local
-            Time_Format %d/%b/%Y:%H:%M:%S %z
-    #   [PARSER]
-    #       Name json_parser
-    #       Format json
-    #       Time_Key time
-    #       Time_Format %Y-%m-%dT%H:%M:%S.%NZ
-
-    #   [PARSER]
-    #       Name regex_parser
-    #       Format regex
-    #       Regex /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
-    #       Time_Format %Y-%m-%dT%H:%M:%S.%N%:z
