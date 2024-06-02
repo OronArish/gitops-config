@@ -1,5 +1,4 @@
 logLevel: info
-## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file
 config:
     service: |
         [SERVICE]
@@ -14,28 +13,43 @@ config:
             Health_Check On
             Trace_Error On
 
-    ## https://docs.fluentbit.io/manual/pipeline/inputs
     inputs: |
         [INPUT]
             Name tail
             Path /var/log/containers/*car*.log
+            Tag car-app.*
+            Parser docker
+            Mem_Buf_Limit 50MB
+            Skip_Long_Lines On
+
+        [INPUT]
+            Name tail
+            Path /var/log/containers/*.log
+            multiline.parser docker, cri
             Tag kube.*
             Parser docker
             Mem_Buf_Limit 50MB
             Skip_Long_Lines On
 
-    ## https://docs.fluentbit.io/manual/pipeline/outputs
-    outputs: |
+    filters: |
+        [FILTER]
+            Name kubernetes
+            Match kube.*
+            Merge_Log On
+            Keep_Log Off
+            Buffer_Size False
+            K8S-Logging.Parser On
 
+    outputs: |
         [OUTPUT]
             Name es
-            Match *car*
+            Match *car.*
             Host elasticsearch.efk.svc.cluster.local
             Port 9200
-            Index fluent-bit
+            Index fluent-bit-car-app
             Type _doc
             Logstash_Format On
-            Logstash_Prefix logstash
+            Logstash_Prefix car-app
             Retry_Limit False
             Suppress_Type_Name On
 
