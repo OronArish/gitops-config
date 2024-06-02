@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: "https://charts.bitnami.com/bitnami"
+    - repoURL: "https://fluent.github.io/helm-charts"
       chart: fluent-bit
-      targetRevision: 2.2.2
+      targetRevision: 0.46.7
       helm:
         valueFiles:
           - $values/infra/apps/logging/fluentbit-values.yaml
