@@ -21,15 +21,15 @@ service:
 ingress:
   name: car-app-ingress
   namespace: car-app
-  host: oron-carapp.ddns.net
-  tlsSecret: oron-carapp.ddns.net-tls
+  host: oron-carapp2.ddns.net
+  tlsSecret: oron-carapp2.ddns.net-tls
 
 clusterissuer:
   name: letsencrypt-prod
   email: oarish96@gmail.com
   server: https://acme-v02.api.letsencrypt.org/directory
   privateKeySecretRef:
-    name: oron-carapp.ddns.net-tls
+    name: oron-carapp2.ddns.net-tls
   ingressClass:
     name: nginx
 
