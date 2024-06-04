@@ -16,7 +16,7 @@ config:
     inputs: |
         [INPUT]
             Name tail
-            Path /var/log/containers/*car*.log
+            Path /var/log/containers/*car-app-deployment*.log
             Tag kube.*
             Parser docker
             Mem_Buf_Limit 50MB
@@ -25,7 +25,7 @@ config:
     outputs: |
         [OUTPUT]
             Name es
-            Match *car*
+            Match *car-app-deployment*
             Host elasticsearch.efk.svc.cluster.local
             Port 9200
             Index fluent-bit-car-app
